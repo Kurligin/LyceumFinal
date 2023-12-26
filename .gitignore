@@ -1,2 +1,8 @@
 .venv
 .idea
+__pycache__
+
+Test
+Books
+
+database.db
