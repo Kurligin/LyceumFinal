@@ -7,7 +7,6 @@ from PyQt5.QtWebEngineWidgets import QWebEngineView
 from PyQt5.QtWidgets import QMainWindow
 
 import logging
-import sys
 
 logging.basicConfig(format='%(asctime)s\t|\t%(levelname)s\t|\t%(filename)s\t|\t%(message)s',
                     datefmt='%Y-%m-%d:%H:%M:%S',
