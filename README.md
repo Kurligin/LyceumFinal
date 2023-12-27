@@ -1,5 +1,6 @@
 Перед началом:
-> pip install -r requirements.txt\n
+> pip install -r requirements.txt
+
 >python3 main.py
 
 # Электронная читалка
