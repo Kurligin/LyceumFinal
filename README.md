@@ -1,7 +1,9 @@
-Starting this project
+Перед началом:
 > pip install -r requirements.txt
-
-Than, start main.py:
 >python3 main.py
 
-This project is about an Ebook PC reader. You can browse, add and delete your books.
+# Электронная читалка
+## О проекте
+Данная программа была разработана для удобного чтения на вашем пк. В программу встроена ссылка на сайт, на котором вы можете быстро скачать книгу, и тут же перебросить ее в читалку.
+
+## 
