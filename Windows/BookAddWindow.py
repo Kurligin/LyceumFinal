@@ -1,15 +1,11 @@
-import os
-
 from Database.Database import Database
-from funcs import WorkWithDir
+from Database.Directory import WorkWithDir
 
 from PyQt5 import uic
-from PyQt5.QtCore import Qt
-from PyQt5.uic.properties import QtGui, QtCore
 from PyQt5.QtWidgets import QMainWindow, QFileDialog, QMessageBox
 
 import logging
-from ebooklib import epub
+import os
 
 logging.basicConfig(format='%(asctime)s\t|\t%(levelname)s\t|\t%(filename)s\t|\t%(message)s',
                     datefmt='%Y-%m-%d:%H:%M:%S',
@@ -40,8 +36,6 @@ class SaveWindow(QMainWindow):
         if self.tempPath != ' ' and self.tempPath != '':
             self.contPath = self.DirModule.MoveBook(self.tempPath)
 
-            self.book = epub.read_epub(self.contPath)
-            self.NameLine.setText(self.book.title)
             logging.info('File added')
         else:
             self.tempPath = None
@@ -63,14 +57,26 @@ class SaveWindow(QMainWindow):
         name = self.NameLine.text()
         author = self.AuthorLine.text()
 
+        rep = self.DB.cursor.execute(
+            'SELECT * FROM books WHERE name = ? AND author = ?',
+            (name, author)
+        ).fetchall()
+
         if name == '' or author == '' or self.tempPath is None:
             logging.info('Empty fields')
             dlg = QMessageBox(self)
             dlg.setWindowTitle("Error")
             dlg.setText("All fields must be complete!\nAlso you need to select book")
             dlg.exec()
+        elif rep:
+            logging.info('Name | Author repeats')
+            dlg = QMessageBox(self)
+            dlg.setWindowTitle("Error")
+            dlg.setText("Name and Author Repeats")
+            dlg.exec()
         else:
             self.DB.AddBook(name, author, self.contPath)
+            print(self.contPath)
             self.tempPath = None
             self.contPath = None
 

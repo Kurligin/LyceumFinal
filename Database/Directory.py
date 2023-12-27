@@ -1,5 +1,7 @@
+import fnmatch
 import os
 import shutil
+import zipfile
 
 
 class WorkWithDir:
@@ -24,3 +26,17 @@ class WorkWithDir:
 
     def GetPath(self):
         return self._path
+
+    def UnzipFolder(self, path):
+        with zipfile.ZipFile(path, 'r') as folder:
+            newFolder = os.path.join('Books', path.split('/')[-1].split('.zip')[0])
+            folder.extractall(path=newFolder)
+            folder.close()
+
+        result = str()
+        for root, dirs, files in os.walk(newFolder):
+            for name in files:
+                if fnmatch.fnmatch(name, '*.html'):
+                    result = os.path.join(root, name)
+
+        return result

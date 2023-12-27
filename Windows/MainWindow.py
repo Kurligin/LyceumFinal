@@ -1,13 +1,15 @@
 from Database.Database import Database
-from funcs import WorkWithDir
+from Database.Directory import WorkWithDir
 
 from Windows.BookAddWindow import SaveWindow
+from Windows.ReaderWindow import ReaderWindow
 
 from PyQt5 import uic
 from PyQt5.QtWidgets import QMainWindow, QMessageBox
 
 import logging
 import webbrowser
+
 
 logging.basicConfig(format='%(asctime)s\t|\t%(levelname)s\t|\t%(filename)s\t|\t%(message)s',
                     datefmt='%Y-%m-%d:%H:%M:%S',
@@ -24,6 +26,7 @@ class MainWindow(QMainWindow):
 
         self.CurrentChoice = None
         self.SearchWindow = None
+        self.BookWindow = None
 
         self.SearchLine.setPlaceholderText('Enter your book name')
 
@@ -51,7 +54,10 @@ class MainWindow(QMainWindow):
         self.ListWidget.addItems(['Press to update'])
 
     def OpenBookButton(self):
-        logging.info('Opened book')
+        if self.CurrentChoice is not None:
+            self.BookWindow = ReaderWindow(self.CurrentChoice)
+            self.BookWindow.show()
+            logging.info('Opened book')
 
     def SearchBookButton(self):
         text = self.SearchLine.text()

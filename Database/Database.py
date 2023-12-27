@@ -19,12 +19,17 @@ class Database:
 
     def AddBook(self, name, author, path):
         self.cursor.execute(
-            "INSERT INTO books VALUES (NULL, ?, ?, ?)", (name, author, path)
+            "INSERT INTO books VALUES (NULL, ?, ?, ?)",
+            (name, author, path)
         )
         self.connection.commit()
 
-    def LoadBook(self, path):
-        pass
+    def LoadBook(self, book, author):
+        res = self.cursor.execute(
+            'SELECT path FROM books WHERE name = ? AND author = ?;',
+            (book, author)
+        ).fetchall()[0][0]
+        return res
 
     def UpdateBookInfo(self):
         res = self.cursor.execute("SELECT * FROM books").fetchall()
