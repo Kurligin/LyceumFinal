@@ -1,0 +1,3 @@
+PyQt5
+pysqlite3
+PyQtWebEngine
